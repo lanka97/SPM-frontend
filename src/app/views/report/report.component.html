@@ -1,25 +1,39 @@
-<div class="main">
+<div style="margin: 20px">
+    <h1>Your file Name</h1>
+</div>
+    <hr/>
+    <div class="main">
         <div class="ui-g">
-                <div class="ui-g-6">
-                    <div class="secondary">
-                        <div>
+            <div class="ui-g-4" >
+                    <div >
+                        <div class="secondary">
                             <h2>your code complexity distribution</h2>
                         </div>
-                        <div>
+                        <div style="padding-top: 50px ">
                                 <p-chart type="doughnut" [data]="data"></p-chart>
                         </div>
                     </div>
-                
-                </div>
-                <div class="ui-g-6">
+            </div>
+                <div class="ui-g-4" style="background-color: rgba(210, 212, 207, 0.815); border-radius: 20px">
                     <div class="totalView">
-                                    <div>
+                                    <div class="secondary">
                                         <h2>Total Comlpexity of your code is</h2>
                                     </div>
                                     <div class="total">50%</div>
                             </div>
                 </div>
-                
+                <div class="ui-g-4" >
+                        <div class="secondary">
+                            <div>
+                                <h2>Download Complexity Report</h2>
+                            </div>
+                            <div style="padding: 50px">
+                                    <img src="../../../assets/Download-Computer-512.png" height="50%" width="50%">
+                            </div>
+                            <div>
+                                    <button class="btn btn-success" id="button1">Download Report</button>
+                            </div>
+                        </div>
             </div>
             
 </div>
