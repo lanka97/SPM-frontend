@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-upload',
@@ -7,9 +8,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class UploadComponent implements OnInit {
 
-  constructor() { }
+  constructor(  private router: Router ) { }
 
   ngOnInit() {
   }
 
+  navReport() {
+    this.router.navigate(['report']);
+  }
 }

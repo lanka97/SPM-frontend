@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import {MatIconModule} from '@angular/material/icon';
+import { ChartModule } from 'primeng/chart';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -22,6 +23,7 @@ import { P500Component } from './views/error/500.component';
   ],
   imports: [
     BrowserModule,
+    ChartModule,
     MatIconModule,
     FontAwesomeModule,
     MDBBootstrapModule.forRoot(),
