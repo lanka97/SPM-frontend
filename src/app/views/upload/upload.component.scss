@@ -1,0 +1,33 @@
+.main{
+    padding: 150px;
+    padding-top: 70px;
+    padding-bottom: 70px;
+    // background-color: rgb(213, 96, 248);
+    display: inline-block;
+    text-align: center;
+    color: white;
+    width: 100%;
+    min-height: 100vh;
+    vertical-align: middle;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-image: url('../../../assets/1_G3Pxy90SG5jZHuc8hZcybQ.jpeg')
+}
+
+.image{
+    padding: 20px
+}
+
+.secondary{
+    border-radius: 20px;
+    background-color: rgba(71, 68, 68, 0.911);
+    padding: 20px;
+}
+
+.link{
+    color: white;
+}
+
+.link:hover{
+    color: rgb(96, 189, 243)
+}
