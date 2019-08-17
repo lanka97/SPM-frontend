@@ -1,5 +1,5 @@
 <div style="margin: 20px">
-    <h1>Your file Name</h1>
+    <h1>Your file Complexity</h1>
 </div>
     <hr/>
     <div class="main">
@@ -19,7 +19,7 @@
                                     <div class="secondary">
                                         <h2>Total Comlpexity of your code is</h2>
                                     </div>
-                                    <div class="total">50%</div>
+                                    <div class="total">{{totalCp}}</div>
                             </div>
                 </div>
                 <div class="ui-g-4" >
@@ -31,10 +31,37 @@
                                     <img src="../../../assets/Download-Computer-512.png" height="50%" width="50%">
                             </div>
                             <div>
-                                    <button class="btn btn-success" id="button1">Download Report</button>
+                                    <button class="btn btn-success" id="button1" (click) = "table.exportCSV()">Download Report</button>
                             </div>
                         </div>
             </div>
             
 </div>
-
+<div style="padding: 20px">
+    <div style="padding: 20px">
+    <h1>Complexity Report</h1>
+    </div>
+    <p-table #table [value]="this.tableArray" exportFilename="complexity" tableStyleClass="break-column" selectionMode="multiple">
+        <ng-template pTemplate="header">
+            <tr>
+                <th *ngFor="let col of cols">
+                    {{col.header}}
+                </th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-car>
+            <tr>
+                <td *ngFor="let col of cols">
+                        {{car[col.field]}}
+                </td>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="emptymessage" let-columns>
+            <tr>
+                <td class="text-center" [attr.colspan]="columns.length">
+                    No Memberships found
+                </td>
+            </tr>
+        </ng-template>
+    </p-table>
+</div>

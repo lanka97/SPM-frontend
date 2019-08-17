@@ -13,6 +13,7 @@ import { UploadComponent } from './views/upload/upload.component';
 import { ReportComponent } from './views/report/report.component';
 import { P404Component } from './views/error/404.component';
 import { P500Component } from './views/error/500.component';
+import { TableModule } from 'primeng/table';
 
 import { NgxSpinnerModule } from 'ngx-spinner';
 
@@ -27,6 +28,7 @@ import { NgxSpinnerModule } from 'ngx-spinner';
   imports: [
     BrowserModule,
     HttpClientModule,
+    TableModule,
     ChartModule,
     MatIconModule,
     FontAwesomeModule,
