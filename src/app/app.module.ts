@@ -1,5 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { HttpClientModule } from '@angular/common/http';
 
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import {MatIconModule} from '@angular/material/icon';
@@ -12,6 +13,9 @@ import { UploadComponent } from './views/upload/upload.component';
 import { ReportComponent } from './views/report/report.component';
 import { P404Component } from './views/error/404.component';
 import { P500Component } from './views/error/500.component';
+import { TableModule } from 'primeng/table';
+
+import { NgxSpinnerModule } from 'ngx-spinner';
 
 @NgModule({
   declarations: [
@@ -23,11 +27,14 @@ import { P500Component } from './views/error/500.component';
   ],
   imports: [
     BrowserModule,
+    HttpClientModule,
+    TableModule,
     ChartModule,
     MatIconModule,
     FontAwesomeModule,
     MDBBootstrapModule.forRoot(),
-    AppRoutingModule
+    AppRoutingModule,
+    NgxSpinnerModule
   ],
   providers: [],
   bootstrap: [AppComponent]
