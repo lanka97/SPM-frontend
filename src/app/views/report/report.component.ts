@@ -30,7 +30,6 @@ export class ReportComponent implements OnInit {
   constructor(private router: Router, private complexityService: ComplexityService, private route: ActivatedRoute) {
     this.route.params.subscribe(params => {
       this.fileName = params.name;
-      console.log(this.fileName);
     });
   }
 
@@ -41,9 +40,9 @@ export class ReportComponent implements OnInit {
 
     this.complexityService.getCiValue(this.fileName).subscribe(res => {
       ciValues = res;
-      // this.setCiArray(ciValues);
-      this.complexityService.getcomplexityValue(this.fileName).subscribe (result => {
+      this.complexityService.getcomplexityValue(this.fileName).subscribe(result => {
         complexityValue = result;
+
         this.setComplexityArry(complexityValue, ciValues);
       });
     });
@@ -57,7 +56,7 @@ export class ReportComponent implements OnInit {
       { field: 'cnc', header: 'Cnc' },
       { field: 'ci', header: 'Ci' },
       { field: 'TW', header: 'TW' },
-      { field: 'cps', header: 'Cpc' },
+      { field: 'cps', header: 'Cps' },
       { field: 'cr', header: 'Cr' }
     ];
 
@@ -96,7 +95,8 @@ export class ReportComponent implements OnInit {
     };
   }
 
-  setComplexityArry(complexityArray, ciArry ) {
+  setComplexityArry(complexityArray, ciArry) {
+    console.log("xxxx" + ciArry.code);
     this.totalCi = ciArry.totalCi;
     this.ciArry = ciArry.code;
     this.complexityArry = complexityArray.code;
@@ -107,31 +107,31 @@ export class ReportComponent implements OnInit {
     console.log(this.totalCs);
 
 
-    console.log( this.ciArry);
-    
-    for ( const ciStatement of ciArry.code) {
+    console.log(this.ciArry);
+
+    for (const ciStatement of ciArry.code) {
       console.log(ciStatement);
       this.row.lineNumber = ciStatement.number;
       this.row.statement = ciStatement.line;
       this.row.ci = ciStatement.Ci;
 
-      // console.log(ciStatement.number);
-      for ( const statement of this.complexityArry ) {
+      for (const statement of this.complexityArry) {
         if (this.row.lineNumber == statement.no) {
           this.row.cs = statement.cs;
           this.row.ctc = statement.ctc;
           this.row.cnc = statement.cnc;
           this.row.cr = statement.cr;
           this.row.cscTokens = statement.cscTokens;
-          // console.log(this.row);
+          this.row.TW = statement.TW;
+          this.row.cps = statement.cps;
+
+          this.tableArray.push(this.row);
+          this.row = {};
         }
       }
 
-      this.tableArray.push(this.row);
-      this.row = {};
-    }
 
-    // console.log(this.row)
+    }
 
     this.data = {
       labels: ['Ci', 'Ctc', 'Cs'],

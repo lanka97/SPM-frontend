@@ -8,12 +8,7 @@ import { environment } from '../../environments/environment';
   })
   export class ComplexityService {
     fileName: string;
-    inheritanceUrl = environment.apiUri + '/size/' + this.fileName;
-    controlStructureUrl = 'http://localhost:3002/transactions';
-    sizeUrl = '';
-    recurtion = '';
-    nestingLevel = '';
-    user: any[];
+
 
     constructor(private _http: HttpClient) { }
 
@@ -28,6 +23,7 @@ import { environment } from '../../environments/environment';
 
     getCiValue(fileName) {
       this.fileName = fileName;
+      console.log(' http://localhost:8080/api/measure/inheritance/' + fileName);
       return this._http.get(' http://localhost:8080/api/measure/inheritance/' + fileName);
     }
 
