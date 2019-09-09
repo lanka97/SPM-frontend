@@ -31,13 +31,14 @@
                                     <img src="../../../assets/Download-Computer-512.png" height="50%" width="50%">
                             </div>
                             <div>
-                                    <button class="btn btn-success" id="button1" >Download Report</button>
+                                <!-- <button class="btn btn-success" id="button1" (click) = 'table.exportCSV()'>Download Report</button>     -->
+                                <button class="btn btn-success" id="button1" (click) = 'this.download()'>Download Report</button>
                             </div>
                         </div>
             </div>
             
 </div>
-<div style="padding: 20px">
+<div style="padding: 20px" id= 'exportThis'>
     <div style="padding: 20px">
     <h1>Complexity Report</h1>
     </div>

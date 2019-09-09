@@ -21,12 +21,6 @@ import { environment } from '../../environments/environment';
     //     return this._http.post(this.transectionsUrl, trans );
     // }
 
-    getCiValue(fileName) {
-      this.fileName = fileName;
-      console.log(' http://localhost:8080/api/measure/inheritance/' + fileName);
-      return this._http.get(' http://localhost:8080/api/measure/inheritance/' + fileName);
-    }
-
     getcomplexityValue(fileName) {
       this.fileName = fileName;
       return this._http.get(' http://localhost:8080/api/measure/' + fileName);
