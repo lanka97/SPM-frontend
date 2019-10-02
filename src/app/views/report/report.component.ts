@@ -3,6 +3,12 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { ComplexityService } from '../../services/complexity.service';
 import { ComplexityStatement } from '../../modal/statementComplexity';
 import { Row } from 'primeng/components/common/shared';
+import { CsvDataService } from '../../services/CsvDataService';
+import * as pdfMake from 'pdfmake';
+import html2canvas from 'html2canvas';
+
+import pdfFonts from 'pdfmake/build/vfs_fonts';
+pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
 
 @Component({
@@ -23,34 +29,28 @@ export class ReportComponent implements OnInit {
   cols: any[];
   complexityArry: any[];
   ciArry: any[];
-  tableArry: any[] = [];
-  tableArray: ComplexityStatement[] = [];
+  tableArray: any;
   row: ComplexityStatement = {};
+  table: any;
+  display: boolean = false;
+
+
 
   constructor(private router: Router, private complexityService: ComplexityService, private route: ActivatedRoute) {
     this.route.params.subscribe(params => {
       this.fileName = params.name;
     });
+
+    // this.setArray([{line: 'line'}, {line: 'line'}, {line: 'line'}]);
+    // );
   }
 
   ngOnInit() {
 
-    let ciValues;
-    let complexityValue;
-
-    this.complexityService.getCiValue(this.fileName).subscribe(res => {
-      ciValues = res;
-      this.complexityService.getcomplexityValue(this.fileName).subscribe(result => {
-        complexityValue = result;
-
-        this.setComplexityArry(complexityValue, ciValues);
-      });
-    });
-
     this.cols = [
-      { field: 'lineNumber', header: 'Line no' },
-      { field: 'statement', header: 'Program statements ' },
-      { field: 'cscTokens', header: 'Tokens identified under the size factor' },
+      { field: 'line', header: 'Line no' },
+      { field: 'code', header: 'Program statements ' },
+      { field: 'ctcTokens', header: 'Tokens identified under the size factor' },
       { field: 'cs', header: 'Cs' },
       { field: 'ctc', header: 'Ctc' },
       { field: 'cnc', header: 'Cnc' },
@@ -60,98 +60,109 @@ export class ReportComponent implements OnInit {
       { field: 'cr', header: 'Cr' }
     ];
 
-    // for ( const ciStatement of ciArry.code) {
-    //   this.row.lineNumber = ciStatement.number;
-    //   this.row.statement = ciStatement.line;
-    //   this.row.ci = ciStatement.ci;
+    this.complexityService.getcomplexityValue(this.fileName).subscribe(result => {
+      let complexityValue;
+      complexityValue = result;
 
-    //   // console.log(ciStatement.number);
-    //   for ( const statement of this.complexityArry ) {
-    //     if (this.row.lineNumber == statement.no) {
-    //       this.row.cs = statement.cs;
-    //       this.row.ctc = statement.ctc;
-    //       this.row.cnc = statement.cnc;
-    //       this.row.cr = statement.cr;
-    //       console.log(this.row);
-    //     }
-    //   }
+      this.tableArray = complexityValue.measure;
+      // this.setArray(complexityValue.measure);
+      this.totalCi = complexityValue.totalCi;
+      console.log(this.totalCi);
+      this.totalCtc = complexityValue.totalCp;
+      this.totalCs = complexityValue.totalCs;
 
-    this.data = {
-      labels: ['Ci', 'Ctc', 'Cs'],
-      datasets: [
-        {
-          data: [this.totalCi, this.totalCtc, this.totalCs],
-          backgroundColor: [
-            "#FF6384",
-            "#36A2EB",
-            "#FFCE56"
-          ],
-          hoverBackgroundColor: [
-            "#FF6384",
-            "#36A2EB",
-            "#FFCE56"
-          ]
-        }]
-    };
+      this.data = {
+        labels: ['Ci', 'Ctc', 'Cs'],
+        datasets: [
+          {
+            data: [this.totalCi, this.totalCtc, this.totalCs],
+            backgroundColor: [
+              "#FF6384",
+              "#36A2EB",
+              "#FFCE56"
+            ],
+            hoverBackgroundColor: [
+              "#FF6384",
+              "#36A2EB",
+              "#FFCE56"
+            ]
+          }]
+      };
+
+      console.log(result);
+      // this.setComplexityArry(complexityValue, ciValues);
+    });
   }
 
-  setComplexityArry(complexityArray, ciArry) {
-    console.log("xxxx" + ciArry.code);
-    this.totalCi = ciArry.totalCi;
-    this.ciArry = ciArry.code;
-    this.complexityArry = complexityArray.code;
-
-    this.totalCtc = complexityArray.totalCtc;
-    this.totalCs = complexityArray.totalCs;
-    this.totalCp = complexityArray.totalCp;
-    console.log(this.totalCs);
-
-
-    console.log(this.ciArry);
-
-    for (const ciStatement of ciArry.code) {
-      console.log(ciStatement);
-      this.row.lineNumber = ciStatement.number;
-      this.row.statement = ciStatement.line;
-      this.row.ci = ciStatement.Ci;
-
-      for (const statement of this.complexityArry) {
-        if (this.row.lineNumber == statement.no) {
-          this.row.cs = statement.cs;
-          this.row.ctc = statement.ctc;
-          this.row.cnc = statement.cnc;
-          this.row.cr = statement.cr;
-          this.row.cscTokens = statement.cscTokens;
-          this.row.TW = statement.TW;
-          this.row.cps = statement.cps;
-
-          this.tableArray.push(this.row);
-          this.row = {};
-        }
-      }
-
-
-    }
-
-    this.data = {
-      labels: ['Ci', 'Ctc', 'Cs'],
-      datasets: [
-        {
-          data: [this.totalCi, this.totalCtc, this.totalCs],
-          backgroundColor: [
-            "#FF6384",
-            "#36A2EB",
-            "#FFCE56"
-          ],
-          hoverBackgroundColor: [
-            "#FF6384",
-            "#36A2EB",
-            "#FFCE56"
-          ]
-        }]
-    };
+  setArray(array: any) {
+    this.tableArray = array;
   }
 
+  showDialog() {
+    this.display = true;
+  }
 
+  downloadCSV() {
+    CsvDataService.exportToCsv('report.csv', this.tableArray);
+    this.display = false;
+  }
+
+  downloadpdf() {
+    // const documentDefinition = { content: this.tableArray};
+
+    // tslint:disable-next-line: align
+    html2canvas(document.getElementById('chart')).then((canvas) => {
+      const data = canvas.toDataURL();
+      const docDefinition = {
+        content: [{
+          image: data,
+          // width: 1000,
+          // height: 750,
+          // x: 0,
+          // y: 0,
+          fit: [500, 500],
+          allowTaint: true,
+          useCORS: true,
+          logging: false,
+          height: window.outerHeight + window.innerHeight,
+          windowHeight: window.outerHeight + window.innerHeight
+        }]
+      };
+      pdfMake.createPdf(docDefinition).open();
+      this.display = false;
+    }).then( () => {
+      // location.reload();
+    });
+
+    // public captureScreen() {
+    //   var data = document.getElementById('exportThis');
+    //   html2canvas(data).then(canvas => {
+    //     // Few necessary setting options
+    //     var imgWidth = 208;
+    //     var pageHeight = 295;
+    //     var imgHeight = canvas.height * imgWidth / canvas.width;
+    //     var heightLeft = imgHeight;
+
+    //     const contentDataURL = canvas.toDataURL('image/png')
+    //     let pdf = new jspdf('p', 'mm', 'a4'); // A4 size page of PDF  
+    //     var position = 0;
+    //     pdf.addImage(contentDataURL, 'PNG', 0, position, imgWidth, imgHeight)
+    //     pdf.save('MYPdf.pdf'); // Generated PDF
+    //   });
+    // }
+
+    //   html2canvas(document.getElementById('exportthis'), {
+    //     // onrendered: function (canvas) {
+    // var data = canvas.toDataURL();
+    // var docDefinition = {
+    //     content: [{
+    //         image: data,
+    //         width: 500,
+    //     }]
+    // };
+    //         pdfMake.createPdf(docDefinition).download("Score_Details.pdf");
+    //     // }
+    // });
+  }
 
 }

@@ -1,7 +1,7 @@
 export interface ComplexityStatement {
-    lineNumber?: number;
-    statement?: string;
-    tokens?: any;
+    line?: number;
+    code?: string;
+    ctcTokens?: any;
     cs?: number;
     cnc?: number;
     ci?: number;
